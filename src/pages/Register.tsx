@@ -40,14 +40,14 @@ export const Register: React.FC = () => {
     localStorage.setItem("users", JSON.stringify(users));
 
     const token = `token_${Date.now()}`;
-    const user = { id: "user123", username: "john" };
-
-    dispatch(register({ user, token }));
-
-    // IMPORTANT: Save to localStorage
+    dispatch(
+      register({ user: { id: newUser.id, username: newUser.username }, token })
+    );
     localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ id: newUser.id, username: newUser.username })
+    );
     navigate("/notes");
   }, [username, password, confirmPassword, dispatch, navigate]);
 
