@@ -15,7 +15,6 @@ export const NotesPage: React.FC = () => {
   const search = useSelector((state: RootState) => state.notes.search);
   const category = useSelector((state: RootState) => state.notes.category);
   const sortBy = useSelector((state: RootState) => state.notes.sortBy);
-  const viewMode = useSelector((state: RootState) => state.notes.viewMode);
 
   const [editingNote, setEditingNote] = useState<Note | undefined>();
   const [showEditor, setShowEditor] = useState(false);
