@@ -9,20 +9,28 @@ interface NoteCardProps {
 }
 
 export const NoteCard: React.FC<NoteCardProps> = React.memo(
-  ({ note, onClick, onDelete, onFavorite }) => {
-    const handleDelete = useCallback(() => {
-      if (confirm("Delete this note?")) onDelete(note.id);
-    }, [note.id, onDelete]);
-
-    const handleFavorite = useCallback(() => {
-      onFavorite(note.id);
-    }, [note.id, onFavorite]);
+  ({ note, onClick, onDelete }) => {
+    const handleDelete = useCallback(
+      (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (confirm("Delete this note?")) onDelete(note.id);
+      },
+      [note.id, onDelete]
+    );
 
     const plainText = note.content.replace(/<[^>]*>/g, "").substring(0, 100);
     const date = new Date(note.updatedAt).toLocaleDateString();
 
     return (
-      <div className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer border">
+      <div className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer border relative">
+        <div className="absolute top-2 right-2 mb-2">
+          <button
+            onClick={handleDelete}
+            className="text-red-400 hover:text-red-600 text-x font-bold"
+          >
+            ✕
+          </button>
+        </div>
         <div onClick={() => onClick(note.id)}>
           <h3 className="font-bold text-lg truncate mb-2">{note.title}</h3>
           <p className="text-gray-600 text-sm mb-3 line-clamp-2">{plainText}</p>
@@ -42,20 +50,6 @@ export const NoteCard: React.FC<NoteCardProps> = React.memo(
             </span>
             <span>{date}</span>
           </div>
-        </div>
-        <div className="flex gap-2 mt-3">
-          <button
-            onClick={handleFavorite}
-            className="text-yellow-500 hover:text-yellow-600 text-lg"
-          >
-            {note.isFavorite ? "⭐" : "☆"}
-          </button>
-          <button
-            onClick={handleDelete}
-            className="ml-auto px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600"
-          >
-            Delete
-          </button>
         </div>
       </div>
     );

@@ -38,9 +38,9 @@ const notesSlice = createSlice({
     ) => {
       state.sortBy = action.payload;
     },
-    setViewMode: (state, action: PayloadAction<"list" | "grid">) => {
-      state.viewMode = action.payload;
-    },
+    //   setViewMode: (state, action: PayloadAction<"list" | "grid">) => {
+    //     state.viewMode = action.payload;
+    //   },
   },
 });
 
@@ -52,6 +52,5 @@ export const {
   setSearch,
   setCategory,
   setSortBy,
-  setViewMode,
 } = notesSlice.actions;
 export default notesSlice.reducer;
